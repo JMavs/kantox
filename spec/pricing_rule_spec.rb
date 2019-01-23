@@ -4,7 +4,7 @@ require 'item'
 RSpec.describe PricingRule, "Pricing Rule behaviour" do
   context "create a pricing rule" do
     it "without arguments" do
-      expect {PricingRule.new}.to raise_error
+      expect {PricingRule.new}.to raise_error(ArgumentError)
     end
 
     it "with arguments" do

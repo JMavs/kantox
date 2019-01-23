@@ -5,11 +5,11 @@ require 'pricing_rule'
 RSpec.describe Checkout, "Checkout behaviour" do
   context "create a checkout" do
     it "without arguments it must not create a new one" do
-      expect {Checkout.new}.to raise_error
+      expect {Checkout.new}.to raise_error(ArgumentError)
     end
 
     it "with an empty array it must not create a new one" do
-      expect {Checkout.new([])}.to raise_error
+      expect {Checkout.new([])}.to raise_error(ArgumentError)
     end
 
     it "with a non-empty array create a new one object" do

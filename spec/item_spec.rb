@@ -3,7 +3,7 @@ require 'item'
 RSpec.describe Item, "Item behaviour" do
   context "create an item" do
     it "without any arguments" do
-      expect {Item.new}.to raise_error
+      expect {Item.new}.to raise_error(ArgumentError)
     end
 
     it "with arguments must create one" do
