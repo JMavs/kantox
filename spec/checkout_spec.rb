@@ -80,6 +80,74 @@ RSpec.describe Checkout, "Checkout behaviour" do
 
       expect(co.total).to eq(16.23)
     end
+  end
 
+  context "calculate total checking offers" do
+    it "check the test data 1: GR1,SR1,GR1,GR1,CF1" do
+      pricing_rules = []
+      gr1 = Item.new('GR1', 'Green tea', 3.11)
+      sr1 = Item.new('SR1', 'Strawberries', 5.00)
+      cf1 = Item.new('CF1', 'Coffee', 11.23)
+
+      pricing_rules << BuyXGetYFree.new(gr1, 2, 1)
+      pricing_rules << DiscountWithMinQuantity.new(sr1, 3, 4.50, false)
+      pricing_rules << DiscountWithMinQuantity.new(cf1, 3, 2.0/3, true)
+
+      co = Checkout.new(pricing_rules)
+      co.scan(gr1)
+      co.scan(sr1)
+      co.scan(gr1)
+      co.scan(gr1)
+      co.scan(cf1)
+
+      expect(co.total).to eq(22.45)
+    end
+    it "check the test data 2: GR1,GR1,GR1,CF1" do
+      pricing_rules = []
+      gr1 = Item.new('GR1', 'Green tea', 3.11)
+
+      pricing_rules << BuyXGetYFree.new(gr1, 2, 1)
+
+      co = Checkout.new(pricing_rules)
+      co.scan(gr1)
+      co.scan(gr1)
+
+      expect(co.total).to eq(3.11)
+    end
+    it "check the test data 3: SR1,SR1,GR1,SR1" do
+      pricing_rules = []
+      gr1 = Item.new('GR1', 'Green tea', 3.11)
+      sr1 = Item.new('SR1', 'Strawberries', 5.00)
+
+      pricing_rules << BuyXGetYFree.new(gr1, 2, 1)
+      pricing_rules << DiscountWithMinQuantity.new(sr1, 3, 4.50, false)
+
+      co = Checkout.new(pricing_rules)
+      co.scan(sr1)
+      co.scan(sr1)
+      co.scan(gr1)
+      co.scan(sr1)
+
+      expect(co.total).to eq(16.61)
+    end
+    it "check the test data 4: GR1,CF1,SR1,CF1,CF1" do
+      pricing_rules = []
+      gr1 = Item.new('GR1', 'Green tea', 3.11)
+      sr1 = Item.new('SR1', 'Strawberries', 5.00)
+      cf1 = Item.new('CF1', 'Coffee', 11.23)
+
+      pricing_rules << BuyXGetYFree.new(gr1, 2, 1)
+      pricing_rules << DiscountWithMinQuantity.new(sr1, 3, 4.50, false)
+      pricing_rules << DiscountWithMinQuantity.new(cf1, 3, 2.0/3, true)
+
+      co = Checkout.new(pricing_rules)
+      co.scan(gr1)
+      co.scan(cf1)
+      co.scan(sr1)
+      co.scan(cf1)
+      co.scan(cf1)
+
+      expect(co.total).to eq(30.57)
+    end
   end
 end
