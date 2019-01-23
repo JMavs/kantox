@@ -1,4 +1,4 @@
-require 'pricing_rule'
+require_relative '../pricing_rule'
 
 class BuyXGetYFree < PricingRule
   def initialize(item, each_get, each_free)

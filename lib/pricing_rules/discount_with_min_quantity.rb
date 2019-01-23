@@ -1,4 +1,4 @@
-require 'pricing_rule'
+require_relative '../pricing_rule'
 
 class DiscountWithMinQuantity < PricingRule
   def initialize(item, min_quantity, price, percentage)
@@ -10,7 +10,7 @@ class DiscountWithMinQuantity < PricingRule
 
   def apply(n)
     if @min > n
-      @item.price*n
+      super
     elsif @percentage
       (@item.price*n*@price).round(2)
     else
