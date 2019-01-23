@@ -27,5 +27,15 @@ RSpec.describe Checkout, "Checkout behaviour" do
 
       expect {co.scan(item)}.to_not raise_error
     end
+
+    it "must not add an item that have not a pricing rule (not registered as item in the shop)" do
+      item = Item.new('GR1', 'Green tea', 3.11)
+      pricing_rules = [PricingRule.new(item)]
+      co = Checkout.new(pricing_rules)
+
+      item_invented = Item.new("NO1", "Crunchy chocolate sticks", 5.00)
+
+      expect {co.scan(item_invented)}.to raise_error(NoRegisteredItem)
+    end
   end
 end
