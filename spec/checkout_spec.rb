@@ -18,4 +18,14 @@ RSpec.describe Checkout, "Checkout behaviour" do
       expect {Checkout.new(pricing_rules)}.to_not raise_error
     end
   end
+
+  context "add content to checkout" do
+    it "must add an item" do
+      item = Item.new('GR1', 'Green tea', 3.11)
+      pricing_rules = [PricingRule.new(item)]
+      co = Checkout.new(pricing_rules)
+
+      expect {co.scan(item)}.to_not raise_error
+    end
+  end
 end
