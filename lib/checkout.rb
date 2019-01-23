@@ -1,3 +1,5 @@
+require_relative './errors/no_registered_item'
+
 class Checkout
   def initialize(pricing_rules)
     raise ArgumentError if !pricing_rules.kind_of?(Array) || pricing_rules.empty?
@@ -11,6 +13,8 @@ class Checkout
       @cart[item.code] = 0 if @cart[item.code].nil?
 
       @cart[item.code]+=1
+    else
+      raise NoRegisteredItem
     end
   end
 
