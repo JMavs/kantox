@@ -1,3 +1,5 @@
+require_relative './pricing_rules/buy_x_get_y_free'
+require_relative './pricing_rules/discount_with_min_quantity'
 require_relative './errors/no_registered_item'
 
 class Checkout
@@ -21,7 +23,7 @@ class Checkout
   def total
     count = 0.0
     @cart.each do |key, value|
-      count+=@pricing_rules[key].apply(@cart[key])
+      count+=@pricing_rules[key].apply(value)
     end
     count
   end
