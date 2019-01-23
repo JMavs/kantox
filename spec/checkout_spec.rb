@@ -38,4 +38,48 @@ RSpec.describe Checkout, "Checkout behaviour" do
       expect {co.scan(item_invented)}.to raise_error(NoRegisteredItem)
     end
   end
+
+  context "calculate total without offers" do
+    it "checkout one item" do
+      item = Item.new('GR1', 'Green tea', 3.11)
+      pricing_rules = [PricingRule.new(item)]
+      co = Checkout.new(pricing_rules)
+      co.scan(item)
+
+      expect(co.total).to eq(3.11)
+    end
+
+    it "checkout a few items (Test 1)" do
+      pricing_rules = []
+
+      tea = Item.new('GR1', 'Green tea', 3.11)
+      coffee = Item.new('CF1', 'Coffee', 11.23)
+
+      pricing_rules << PricingRule.new(tea)
+      pricing_rules << PricingRule.new(coffee)
+
+      co = Checkout.new(pricing_rules)
+      co.scan(tea)
+      co.scan(coffee)
+
+      expect(co.total).to eq(14.34)
+    end
+
+    it "checkout a few items (Test 2)" do
+      pricing_rules = []
+
+      strawberries = Item.new('SR1', 'Strawberries', 5.00)
+      coffee = Item.new('CF1', 'Coffee', 11.23)
+
+      pricing_rules << PricingRule.new(strawberries)
+      pricing_rules << PricingRule.new(coffee)
+
+      co = Checkout.new(pricing_rules)
+      co.scan(strawberries)
+      co.scan(coffee)
+
+      expect(co.total).to eq(16.23)
+    end
+
+  end
 end
