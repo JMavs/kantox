@@ -63,7 +63,7 @@ Total price expected: £30.57
 # Doc after finish the project
 ## Usage
 ```sh
-cd lib && irb
+irb
 ```
 
 ```ruby
