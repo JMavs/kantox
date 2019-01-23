@@ -4,4 +4,8 @@ class PricingRule
   def initialize(item)
     @item = item
   end
+
+  def apply(n)
+    n*@item.price
+  end
 end
